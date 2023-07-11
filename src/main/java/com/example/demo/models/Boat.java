@@ -23,6 +23,12 @@ public class Boat {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "image_id", referencedColumnName = "id")
+    private ImageData image;
+
+
+
     public Boat(Long id, String name, String description, User user) {
         this.id = id;
         this.name = name;
@@ -70,6 +76,14 @@ public class Boat {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public ImageData getImage() {
+        return image;
+    }
+
+    public void setImage(ImageData image) {
+        this.image = image;
     }
 
     @Override

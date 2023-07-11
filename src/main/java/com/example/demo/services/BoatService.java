@@ -5,9 +5,12 @@ import com.example.demo.exceptions.EntityNotFoundException;
 import com.example.demo.exceptions.IllegalArgumentException;
 import com.example.demo.jpaRepositories.BoatRepository;
 import com.example.demo.models.Boat;
+import com.example.demo.models.ImageData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -65,6 +68,38 @@ public class BoatService {
 
         return toDTO(boat);
     }
+
+    public String uploadImage(Long boatId, MultipartFile file) {
+        Optional<Boat> boatOpt = boatRepository.findById(boatId);
+        if(boatOpt.isEmpty()){
+            throw new EntityNotFoundException("Boat not found");
+        }
+        Boat boat = boatOpt.get();
+
+        try{
+            ImageData img = new ImageData(file.getOriginalFilename(), file.getContentType(),ImageData.compressImage(file.getBytes()), boat);
+            boat.setImage(img);
+            boatRepository.save(boat);
+
+            return img.getName();
+        }catch(IOException e){
+
+        }
+
+        throw new IllegalArgumentException("Something went wrong with the image upload.");
+    }
+
+
+    public byte[] getImage(Long boatId) {
+        Optional<Boat> boatOpt = boatRepository.findById(boatId);
+        if(boatOpt.isEmpty()){
+            throw new EntityNotFoundException("Boat not found");
+        }
+        Boat boat = boatOpt.get();
+        byte[] image = ImageData.decompressImage(boat.getImage().getImageData());
+        return image;
+    }
+
 
 
 
