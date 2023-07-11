@@ -1,6 +1,8 @@
 package com.example.demo.services;
 
 import com.example.demo.dto.BoatResponse;
+import com.example.demo.exceptions.EntityNotFoundException;
+import com.example.demo.exceptions.IllegalArgumentException;
 import com.example.demo.jpaRepositories.BoatRepository;
 import com.example.demo.models.Boat;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +38,7 @@ public class BoatService {
     public BoatResponse getBoat(Long boatId) {
         Optional<Boat> boat = boatRepository.findById(boatId);
         if(boat.isEmpty()){
-            throw new IllegalArgumentException();
+            throw new EntityNotFoundException("Boat not found");
         }
 
         return toDTO(boat.get());
@@ -44,13 +46,17 @@ public class BoatService {
 
     public void deleteBoat(Long boatId) {
         //missing verification to check if its from the user
+        Optional<Boat> boatOpt = boatRepository.findById(boatId);
+        if(boatOpt.isEmpty()){
+            throw new EntityNotFoundException("Boat not found");
+        }
         boatRepository.deleteById(boatId);
     }
 
     public BoatResponse updateBoat(Long boatId, Boat newBoat) {
         Optional<Boat> boatOpt = boatRepository.findById(boatId);
         if(boatOpt.isEmpty()){
-            throw new IllegalArgumentException();
+            throw new EntityNotFoundException("Boat not found");
         }
         Boat boat = boatOpt.get();
         boat.setName(newBoat.getName());

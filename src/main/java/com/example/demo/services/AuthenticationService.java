@@ -1,5 +1,7 @@
 package com.example.demo.services;
 
+import com.example.demo.exceptions.EntityExistsException;
+import com.example.demo.exceptions.EntityNotFoundException;
 import com.example.demo.jpaRepositories.UserRepository;
 import com.example.demo.models.*;
 import com.example.demo.requests.AuthenticationRequest;
@@ -27,6 +29,9 @@ public class AuthenticationService {
     public AuthenticationResponse register(RegisterRequest request) {
         //String name, String email, String password
         var user = new User(request.getName(), request.getEmail(), passwordEncoder.encode(request.getPassword()), Role.USER);
+        if(userRepository.findByEmail(request.getEmail()).isPresent()){
+            throw new EntityExistsException("User with this email already exists!");
+        }
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
         return new AuthenticationResponse(jwtToken);
@@ -35,6 +40,9 @@ public class AuthenticationService {
     public AuthenticationResponse register(User user) {
         //String name, String email, String password
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        if(userRepository.findByEmail(user.getEmail()).isPresent()){
+            throw new EntityExistsException("User with this email already exists!");
+        }
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
         return new AuthenticationResponse(jwtToken);
