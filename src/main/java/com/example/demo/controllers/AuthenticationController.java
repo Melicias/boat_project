@@ -1,8 +1,8 @@
 package com.example.demo.controllers;
 
-import com.example.demo.models.AuthenticationRequest;
-import com.example.demo.models.AuthenticationResponse;
-import com.example.demo.models.RegisterRequest;
+import com.example.demo.requests.AuthenticationRequest;
+import com.example.demo.dto.AuthenticationResponse;
+import com.example.demo.requests.RegisterRequest;
 import com.example.demo.services.AuthenticationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

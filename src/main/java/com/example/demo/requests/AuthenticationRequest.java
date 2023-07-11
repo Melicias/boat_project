@@ -1,26 +1,16 @@
-package com.example.demo.models;
+package com.example.demo.requests;
 
-public class RegisterRequest {
+public class AuthenticationRequest {
 
-    private String name;
     private String email;
     private String password;
 
-    public RegisterRequest(String name, String email, String password) {
-        this.name = name;
+    public AuthenticationRequest(String email, String password) {
         this.email = email;
         this.password = password;
     }
 
-    public RegisterRequest() {
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public AuthenticationRequest() {
     }
 
     public String getEmail() {

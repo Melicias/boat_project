@@ -1,4 +1,4 @@
-package com.example.demo.models;
+package com.example.demo.dto;
 
 public class AuthenticationResponse {
     private String token;

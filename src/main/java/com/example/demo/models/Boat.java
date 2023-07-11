@@ -19,15 +19,21 @@ public class Boat {
     private String name;
     private String description;
 
-    public Boat(Long id, String name, String description) {
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    public Boat(Long id, String name, String description, User user) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.user = user;
     }
 
-    public Boat(String name, String description) {
+    public Boat(String name, String description, User user) {
         this.name = name;
         this.description = description;
+        this.user = user;
     }
 
     public Boat(){
@@ -56,6 +62,14 @@ public class Boat {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
