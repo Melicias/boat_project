@@ -28,7 +28,7 @@ public class ImageData {
 
     private String type;
 
-    @Lob
+    //@Lob -> had to remove this because it started to give an error
     @Column(name = "imagedata")
     private byte[] imageData;
 

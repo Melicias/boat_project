@@ -1,0 +1,362 @@
+{
+	"info": {
+		"_postman_id": "61986759-3b70-425c-83d4-5c312c5ecf62",
+		"name": "boat API requests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18130505"
+	},
+	"item": [
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Joaquim\",\r\n    \"email\": \"email@email.com\",\r\n    \"password\": \"1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/auth/register",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "authenticate",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"email@email.com\",\r\n    \"password\": \"1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/auth/authenticate",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get boats from user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlbWFpbEBlbWFpbC5jb20iLCJpYXQiOjE2ODkyNjQ0MjcsImV4cCI6MTY4OTM1MDgyN30.mExDiPKd_2cyhpjfkRSR6_VTdVsRNYQDj9-ogi7hxq4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/boat",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"boat"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get boat by id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlbWFpbEBlbWFpbC5jb20iLCJpYXQiOjE2ODkyNTE5MDUsImV4cCI6MTY4OTMzODMwNX0.dfXucjKqjLlVVYNRg5lllGondHqGXcogU985Xsg7dhk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/boat/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"boat",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post boat",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlbWFpbEBlbWFpbC5jb20iLCJpYXQiOjE2ODkyNTIzNzEsImV4cCI6MTY4OTMzODc3MX0.ETgqOejCyjdzqppRmK1hC8O41GOwDCVROZbDMwHsFhw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"asd\",\r\n    \"description\": \"this is a random description\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/boat",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"boat"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete boat",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlbWFpbEBlbWFpbC5jb20iLCJpYXQiOjE2ODkyNjQ0MjcsImV4cCI6MTY4OTM1MDgyN30.mExDiPKd_2cyhpjfkRSR6_VTdVsRNYQDj9-ogi7hxq4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/boat/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"boat",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update boat",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlbWFpbEBlbWFpbC5jb20iLCJpYXQiOjE2ODkyNjQ0MjcsImV4cCI6MTY4OTM1MDgyN30.mExDiPKd_2cyhpjfkRSR6_VTdVsRNYQDj9-ogi7hxq4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"teste2.0\",\r\n    \"description\": \"uiiiiii\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/boat/2",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"boat",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ADMIN get boat by id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE2ODkyNjQxNTMsImV4cCI6MTY4OTM1MDU1M30.PWcQ9J_q_dkjqEkMowYncXGQQokaoFBdwHdgWSbOpnA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/boat/all/2",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"boat",
+						"all",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ADMIN get all boats",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE2ODkyNjQxNTMsImV4cCI6MTY4OTM1MDU1M30.PWcQ9J_q_dkjqEkMowYncXGQQokaoFBdwHdgWSbOpnA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/boat/all",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"boat",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Image into boat",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlbWFpbEBlbWFpbC5jb20iLCJpYXQiOjE2ODkyNjQ5MjEsImV4cCI6MTY4OTM1MTMyMX0.GV1YGhhf6SU_aVKiPAIG9S5sUUFP6W_Q2nuO--EQumY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/C:/Users/melic/Downloads/logo_v2.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8080/boat/image/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"boat",
+						"image",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get Image from boat",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlbWFpbEBlbWFpbC5jb20iLCJpYXQiOjE2ODkyNjQ5MjEsImV4cCI6MTY4OTM1MTMyMX0.GV1YGhhf6SU_aVKiPAIG9S5sUUFP6W_Q2nuO--EQumY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/boat/image/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"boat",
+						"image",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "user_token",
+			"value": "O"
+		}
+	]
+}

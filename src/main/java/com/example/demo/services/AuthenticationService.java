@@ -8,9 +8,13 @@ import com.example.demo.requests.AuthenticationRequest;
 import com.example.demo.requests.RegisterRequest;
 import com.example.demo.dto.AuthenticationResponse;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class AuthenticationService {
@@ -49,9 +53,22 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(),request.getPassword()));
+        Optional<User> userOpt = userRepository.findByEmail(request.getEmail());
+        if(userOpt.isEmpty())
+            throw new UsernameNotFoundException("Email not found.");
+        User user = userOpt.get();
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword()))
+            throw new UsernameNotFoundException("Invalid password.");
 
-        var user = userRepository.findByEmail(request.getEmail()).orElseThrow();
+        try{
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(),request.getPassword()));
+        }catch(BadCredentialsException e){
+            //This doesnt work correctly, cant find a way to make this
+            throw new UsernameNotFoundException("Invalid email or password");
+        }
+
+
+        user = userRepository.findByEmail(request.getEmail()).orElseThrow(() -> new UsernameNotFoundException("Invalid email or password"));
 
         var jwtToken = jwtService.generateToken(user);
         return new AuthenticationResponse(jwtToken);
