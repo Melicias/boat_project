@@ -6,6 +6,8 @@ import com.example.demo.exceptions.IllegalArgumentException;
 import com.example.demo.jpaRepositories.BoatRepository;
 import com.example.demo.models.Boat;
 import com.example.demo.models.ImageData;
+import com.example.demo.models.User;
+import com.example.demo.requests.BoatRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,8 +30,14 @@ public class BoatService {
         return toDTOs(boatRepository.findAll());
     }
 
+    public List<BoatResponse> getBoatsUser(User user){
+        Optional<List<Boat>> boat = boatRepository.findByUser(user);
+        List<Boat> boats = boat.get();
+        return toDTOs(boats);
+    }
+
     public BoatResponse addBoat(Boat boat) {
-        if( boat.getName().isBlank()){
+        if(boat.getName().isBlank()){
             throw new IllegalArgumentException("No name provided");
         }
 
@@ -47,30 +55,44 @@ public class BoatService {
         return toDTO(boat.get());
     }
 
-    public void deleteBoat(Long boatId) {
+    public BoatResponse getBoatUser(User user, Long boatId) {
+        Optional<Boat> boat = boatRepository.findByUserAndId(user, boatId);
+        if(boat.isEmpty()){
+            throw new EntityNotFoundException("Boat not found");
+        }
+
+        return toDTO(boat.get());
+    }
+
+    public void deleteBoat(Long boatId, User user) {
         //missing verification to check if its from the user
-        Optional<Boat> boatOpt = boatRepository.findById(boatId);
+        Optional<Boat> boatOpt = boatRepository.findByUserAndId(user, boatId);
         if(boatOpt.isEmpty()){
             throw new EntityNotFoundException("Boat not found");
         }
         boatRepository.deleteById(boatId);
     }
 
-    public BoatResponse updateBoat(Long boatId, Boat newBoat) {
-        Optional<Boat> boatOpt = boatRepository.findById(boatId);
+    public BoatResponse updateBoat(Long boatId, BoatRequest boatRequest, User user) {
+        Optional<Boat> boatOpt = boatRepository.findByUserAndId(user, boatId);
         if(boatOpt.isEmpty()){
             throw new EntityNotFoundException("Boat not found");
         }
+
+        if( boatRequest.getName().isBlank()){
+            throw new IllegalArgumentException("No name provided");
+        }
+
         Boat boat = boatOpt.get();
-        boat.setName(newBoat.getName());
-        boat.setDescription(newBoat.getDescription());
+        boat.setName(boatRequest.getName());
+        boat.setDescription(boatRequest.getDescription());
         boatRepository.save(boat);
 
         return toDTO(boat);
     }
 
-    public String uploadImage(Long boatId, MultipartFile file) {
-        Optional<Boat> boatOpt = boatRepository.findById(boatId);
+    public String uploadImage(Long boatId, MultipartFile file, User user) {
+        Optional<Boat> boatOpt = boatRepository.findByUserAndId(user, boatId);
         if(boatOpt.isEmpty()){
             throw new EntityNotFoundException("Boat not found");
         }
@@ -90,8 +112,8 @@ public class BoatService {
     }
 
 
-    public byte[] getImage(Long boatId) {
-        Optional<Boat> boatOpt = boatRepository.findById(boatId);
+    public byte[] getImage(Long boatId, User user) {
+        Optional<Boat> boatOpt = boatRepository.findByUserAndId(user, boatId);
         if(boatOpt.isEmpty()){
             throw new EntityNotFoundException("Boat not found");
         }
